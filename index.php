@@ -38,7 +38,65 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-12 col-lg-3">
+				<div id="refleksje" class="col-sm-12 col-lg-3">
+					<h1>Refleksje</h1>
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<p>Prześlij refleksję</p>
+						</div>
+					  	<div class="panel-body">
+					    	<form method="POST" action="insert.php">
+							  	<div class="form-group">
+							    	<label for="title">Tytuł</label>
+							    	<input type="text" class="form-control" name="title" id="title" placeholder="Tytuł refleksji">
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="content">Treść</label>
+							    	<textarea id="content" name="content" class="form-control" rows="3"></textarea>
+							  	</div>
+							  	<button type="submit" class="btn btn-primary pull-right">Prześlij</button>
+							</form>
+					  	</div>
+					</div>
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<p>Przesłane refleksje</p>
+						</div>
+					  	<div class="panel-body">
+					    	<?php
+								include_once('parameters.php');
+
+								$connection = mysqli_connect($hostname, $username, $password2, $database);
+						 	 	if (mysqli_connect_errno()) {
+						       		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						     	}
+								$query = "SELECT * FROM reflections;";
+								$result = mysqli_query($connection, $query);
+								if (!$result) {
+				  					echo "An error occured.\n";
+				  					exit;
+								} else {
+									echo "<table class='table table-hover'>
+											<thead>
+												<tr>
+													<th>Id</th>
+													<th>Tytuł</th>
+													<th>Treść</th>
+												<tr>
+											</thead>
+											<tbody>";
+									while($row = mysqli_fetch_array($result)){
+										echo "<tr>";
+										echo "<td>".$row[0]."</td>";
+										echo "<td>".$row[1]."</td>";
+										echo "<td>".$row[2]."</td>";
+										echo "</tr>";
+									}
+									echo "</tbody></table>";
+								}
+							?>
+					  	</div>
+					</div>
 				</div>
 
 				<div id="ksiegi" class="col-sm-12 col-lg-9">
